@@ -15,7 +15,3 @@ function el(type, attrs, children) {
     return new CLASSES[type](type, attrs, children);
 
 }
-
-const tree = el('span', {class: 'span'}, 101);
-
-document.getElementById('root').appendChild(tree.draw());
