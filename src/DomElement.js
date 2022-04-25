@@ -5,6 +5,7 @@ export default class DomElement {
         this.type = type;
         this.props = props || {};
         this.children = children || [];
+        
         this._primalType = 'DOMELEMENT';
         this._possibleAttributes = [
             'id', 'class', 'style', 'hidden', 'title' 
@@ -12,11 +13,15 @@ export default class DomElement {
     }
     
     _checkType() {
+        // Checks for correctness of the type of the created instance.
+        // Can't create DivElement if passed type to the constructor
+        // for example 'INPUT' 
         if (this.type.toUpperCase() !== this._primalType) {
             throw new Error('The element type does not match the class type!');
         }
     }
 
+    // Checks the attributes that a particular element can have 
     _checkPossibleAttributes() {
         for (let attr of Object.keys(this.props)) {
             if (!this._possibleAttributes.includes(attr.toLowerCase())) {
@@ -25,6 +30,7 @@ export default class DomElement {
         }
     }
 
+    // Adds attributes for the desired class 
     _addAttributes(...attr) {
         this._possibleAttributes = [...this._possibleAttributes, ...attr];
     }
