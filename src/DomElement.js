@@ -5,6 +5,28 @@ export default class DomElement {
         this.type = type;
         this.props = props || {};
         this.children = children || [];
+        this._primalType = 'DOMELEMENT';
+        this._possibleAttributes = [
+            'id', 'class', 'style', 'hidden', 'title' 
+        ]
+    }
+    
+    _checkType() {
+        if (this.type.toUpperCase() !== this._primalType) {
+            throw new Error('The element type does not match the class type!');
+        }
+    }
+
+    _checkPossibleAttributes() {
+        for (let attr of Object.keys(this.props)) {
+            if (!this._possibleAttributes.includes(attr.toLowerCase())) {
+                throw new Error(`Can't add attribute ${attr} to ${this._primalType}`);
+            }
+        }
+    }
+
+    _addAttributes(...attr) {
+        this._possibleAttributes = [...this._possibleAttributes, ...attr];
     }
 
     draw() {
