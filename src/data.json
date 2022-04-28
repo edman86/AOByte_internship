@@ -1,0 +1,102 @@
+[
+	{
+		"id": 1,
+		"title": "Post 1: Lorem ipsum",
+		"comments": [
+			{
+				"id": 101,
+				"text": "comment1",
+				"rate": 7
+			},
+			{
+				"id": 102,
+				"text": "comment2",
+				"rate": 5
+			},
+			{
+				"id": 103,
+				"text": "comment3",
+				"rate": 3
+			}
+		],
+		"disabled": false
+	},
+	{
+		"id": 2,
+		"title": "Post 2: Dolor sit amet",
+		"comments": [
+			{
+				"id": 201,
+				"text": "comment1",
+				"rate": 20
+			},
+			{
+				"id": 202,
+				"text": "comment2",
+				"rate": 10
+			}
+		],
+		"disabled": false
+	},
+	{
+		"id": 3,
+		"title": "Post 3: Mollitia fuga",
+		"comments": [
+			{
+				"id": 301,
+				"text": "comment1",
+				"rate": 2
+			},
+			{
+				"id": 302,
+				"text": "comment2",
+				"rate": 4
+			},
+			{
+				"id": 303,
+				"text": "comment3",
+				"rate": 8
+			}
+		],
+		"disabled": false
+	},
+	{
+		"id": 4,
+		"title": "Post 4: Temporibus quos",
+		"comments": [
+			{
+				"id": 401,
+				"text": "comment1",
+				"rate": 1
+			},
+			{
+				"id": 402,
+				"text": "comment2",
+				"rate": 2
+			}
+		],
+		"disabled": false
+	},
+	{
+		"id": 5,
+		"title": "Post 5: Maxime minus",
+		"comments": [
+			{
+				"id": 501,
+				"text": "comment1",
+				"rate": 15
+			},
+			{
+				"id": 502,
+				"text": "comment2",
+				"rate": 2
+			},
+			{
+				"id": 503,
+				"text": "comment2",
+				"rate": 4
+			}
+		],
+		"disabled": false
+	}
+]

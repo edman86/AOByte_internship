@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Pool from './components/Pool';
+import List from './components/List';
+import { addAverageRate } from './utils';
+import data from './data';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			posts: [],
+		};
+	}
+
+	disablePost = (id) => {
+		const updatedPosts = this.state.posts.map(post => {
+			return (post.id === id) ? { ...post, disabled: !post.disabled } : post
+		});
+		this.setState({ posts: updatedPosts });
+	}
+
+	componentDidMount() {
+		const postsWithAvarageRate = addAverageRate(data);
+		this.setState({ posts: postsWithAvarageRate });
+	}
+
+	render() {
+		return (
+			<div className="App">
+				<Pool posts={this.state.posts} />
+				<div className='list-container'>
+					<List posts={this.state.posts} disablePost={this.disablePost} />
+					<List posts={this.state.posts} disablePost={this.disablePost} />
+				</div>
+			</div>
+		);
+	}
 }
 
 export default App;
