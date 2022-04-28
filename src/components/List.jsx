@@ -2,112 +2,112 @@ import React, { Component } from 'react';
 import { findMaxRatePost, sortList } from '../utils';
 
 class List extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			list: [],
-			sort: 'desc'
-		}
-	}
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: [],
+            sort: 'desc'
+        }
+    }
 
-	addToList = (e) => {
-		e.stopPropagation();
+    addToList = (e) => {
+        e.stopPropagation();
 
-		const { posts } = this.props;
-		const updatedList = [...this.state.list];
+        const { posts } = this.props;
+        const updatedList = [...this.state.list];
 
-		const max = findMaxRatePost(posts);
+        const max = findMaxRatePost(posts);
 
-		if (!max) {
-			return;
-		}
+        if (!max) {
+            return;
+        }
 
-		updatedList.push({
-			id: (Date.now()).toString(16),
-			title: max.title,
-			rate: max.averageRate,
-			mainId: max.id
-		});
+        updatedList.push({
+            id: (Date.now()).toString(16),
+            title: max.title,
+            rate: max.averageRate,
+            mainId: max.id
+        });
 
-		// sorting list by it state (asc or desc)
-		const sortedList = sortList(updatedList, this.state);
+        // sorting list by it state (asc or desc)
+        const sortedList = sortList(updatedList, this.state);
 
-		this.setState({ list: sortedList });
+        this.setState({ list: sortedList });
 
-		// disabing post
-		this.props.disablePost(max.id);
-	}
+        // disabing post
+        this.props.disablePost(max.id);
+    }
 
-	removeFromList = (id) => {
-		const { list } = this.state;
+    removeFromList = (id) => {
+        const { list } = this.state;
 
-		// finding removed item for getting post id
-		const removed = list.find(item => item.id === id);
+        // finding removed item for getting post id
+        const removed = list.find(item => item.id === id);
 
-		// excluding removed item from list
-		const updatedList = list.filter(item => item.id !== id);
-		this.setState({ list: updatedList });
+        // excluding removed item from list
+        const updatedList = list.filter(item => item.id !== id);
+        this.setState({ list: updatedList });
 
-		// enabling post
-		this.props.disablePost(removed.mainId);
-	}
+        // enabling post
+        this.props.disablePost(removed.mainId);
+    }
 
-	sort = (e) => {
-		e.stopPropagation();
-		if (this.state.sort === 'asc') {
-			this.setState({ sort: 'desc' });
-		} else {
-			this.setState({ sort: 'asc' });
-		}
-	}
+    sort = (e) => {
+        e.stopPropagation();
+        if (this.state.sort === 'asc') {
+            this.setState({ sort: 'desc' });
+        } else {
+            this.setState({ sort: 'asc' });
+        }
+    }
 
-	componentDidUpdate(prevProps, prevState) {
-		if (prevState.sort !== this.state.sort) {
-			const sortedList = sortList([...this.state.list], this.state);
-			this.setState({ list: sortedList });
-		}
-	}
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.sort !== this.state.sort) {
+            const sortedList = sortList([...this.state.list], this.state);
+            this.setState({ list: sortedList });
+        }
+    }
 
-	render() {
-		return (
-			<div className='list'>
-				<button
-					type="button"
-					className='btn'
-					onClick={this.addToList}
-				>
-					+
-				</button>
+    render() {
+        return (
+            <div className='list'>
+                <button
+                    type="button"
+                    className='btn'
+                    onClick={this.addToList}
+                >
+                    +
+                </button>
 
-				<button
-					type="button"
-					className='btn'
-					onClick={this.sort}
-				>
-					{this.state.sort === 'desc' ? <span>&#8595;</span> : <span>&#8593;</span>}
-				</button>
+                <button
+                    type="button"
+                    className='btn'
+                    onClick={this.sort}
+                >
+                    {this.state.sort === 'desc' ? <span>&#8595;</span> : <span>&#8593;</span>}
+                </button>
 
-				<ul>
-					{this.state.list.map(item => {
-						return (
-							<li key={item.id} className="list__item">
-								<span>{item.title}</span>
-								<span>&#9734;{item.rate}</span>
-								<button
-									type='button'
-									className='list__remove-btn'
-									onClick={() => this.removeFromList(item.id)}
-								>
-									&minus;
-								</button>
-							</li>
-						);
-					})}
-				</ul>
+                <ul>
+                    {this.state.list.map(item => {
+                        return (
+                            <li key={item.id} className="list__item">
+                                <span>{item.title}</span>
+                                <span>&#9734;{item.rate}</span>
+                                <button
+                                    type='button'
+                                    className='list__remove-btn'
+                                    onClick={() => this.removeFromList(item.id)}
+                                >
+                                    &minus;
+                                </button>
+                            </li>
+                        );
+                    })}
+                </ul>
 
-			</div>
-		);
-	}
+            </div>
+        );
+    }
 };
 
 export default List;
