@@ -1,7 +1,7 @@
 import Comment from "./Comment";
 
 const Comments = ({ comments }) => {
-    return (
+	return (
 		<ul className="comments">
 			{comments.map((comment) => {
 				return <Comment key={comment.id} comment={comment} />;
