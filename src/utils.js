@@ -1,5 +1,4 @@
 export function addAverageRate(data) {
-
     // Maps all posts in the data,
     // calculates the average of comments rate 
     // and returns new array of posts with the average rating added.
@@ -16,19 +15,18 @@ export function addAverageRate(data) {
 export function findMaxRatePost(posts) {
     const enabledPosts = posts.filter(post => !post.disabled);
 
-    if (!enabledPosts.length) {
-        return;
-    }
+    if (!enabledPosts.length) return;
+
     // finding post with max rate
     return enabledPosts.reduce((prev, current) => {
         return (+prev.averageRate > +current.averageRate) ? prev : current;
-    })
+    });
 }
 
-export function sortList(list, state) {
-    const sortedList = [...list];
+export function sortList(state) {
+    const sortedList = [...state.list];
 
-    if (state.sort === 'asc') {
+    if (state.sort) {
         sortedList.sort((a, b) => parseFloat(a.rate) - parseFloat(b.rate));
     } else {
         sortedList.sort((a, b) => parseFloat(b.rate) - parseFloat(a.rate));

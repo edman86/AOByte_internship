@@ -6,7 +6,7 @@ class List extends Component {
         super(props);
         this.state = {
             list: [],
-            sort: 'desc'
+            sort: false
         }
     }
 
@@ -18,9 +18,7 @@ class List extends Component {
 
         const max = findMaxRatePost(posts);
 
-        if (!max) {
-            return;
-        }
+        if (!max) return;
 
         updatedList.push({
             id: (Date.now()).toString(16),
@@ -29,10 +27,7 @@ class List extends Component {
             mainId: max.id
         });
 
-        // sorting list by it state (asc or desc)
-        const sortedList = sortList(updatedList, this.state);
-
-        this.setState({ list: sortedList });
+        this.setState({ list: updatedList });
 
         // disabing post
         this.props.disablePost(max.id);
@@ -54,21 +49,14 @@ class List extends Component {
 
     sort = (e) => {
         e.stopPropagation();
-        if (this.state.sort === 'asc') {
-            this.setState({ sort: 'desc' });
-        } else {
-            this.setState({ sort: 'asc' });
-        }
+        this.setState({ sort: !this.state.sort });
     }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (prevState.sort !== this.state.sort) {
-            const sortedList = sortList([...this.state.list], this.state);
-            this.setState({ list: sortedList });
-        }
-    }
-
+    
     render() {
+        
+        // sorting list by state.sort (asc or desc)
+        const sortedList = sortList(this.state);
+        
         return (
             <div className='list'>
                 <button
@@ -84,11 +72,11 @@ class List extends Component {
                     className='btn'
                     onClick={this.sort}
                 >
-                    {this.state.sort === 'desc' ? <span>&#8595;</span> : <span>&#8593;</span>}
+                    {this.state.sort ? <span>&#8593;</span> : <span>&#8595;</span>}
                 </button>
 
                 <ul>
-                    {this.state.list.map(item => {
+                    {sortedList.map(item => {
                         return (
                             <li key={item.id} className="list__item">
                                 <span>{item.title}</span>
