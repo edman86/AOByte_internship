@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { findMaxRatePost, sortList } from '../utils';
+import { v4 as uuidv4 } from 'uuid';
 
 class List extends Component {
     constructor(props) {
@@ -21,7 +22,7 @@ class List extends Component {
         if (!max) return;
 
         updatedList.push({
-            id: (Date.now()).toString(16),
+            id: uuidv4(),
             title: max.title,
             rate: max.averageRate,
             mainId: max.id
@@ -80,14 +81,17 @@ class List extends Component {
                         return (
                             <li key={item.id} className="list__item">
                                 <span>{item.title}</span>
-                                <span>&#9734;{item.rate}</span>
-                                <button
-                                    type='button'
-                                    className='list__remove-btn'
-                                    onClick={() => this.removeFromList(item.id)}
-                                >
-                                    &minus;
-                                </button>
+                                
+                                <div>
+                                    <span>&#9734;{item.rate}</span>
+                                    <button
+                                        type='button'
+                                        className='list__remove-btn'
+                                        onClick={() => this.removeFromList(item.id)}
+                                    >
+                                        &minus;
+                                    </button>
+                                </div>
                             </li>
                         );
                     })}

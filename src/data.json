@@ -101,39 +101,39 @@
     },
     {
         "id": 6,
-        "title": "Post 5: Maxime minus",
+        "title": "Post 6: Quibusdam voluptas",
         "comments": [
             {
                 "id": 601,
                 "text": "comment1",
-                "rate": 15
+                "rate": 1
             },
             {
                 "id": 602,
                 "text": "comment2",
-                "rate": 2
+                "rate": 1
             },
             {
                 "id": 603,
                 "text": "comment2",
-                "rate": 4
+                "rate": 1
             }
         ],
         "disabled": false
     },
     {
         "id": 7,
-        "title": "Post 5: Maxime minus",
+        "title": "Post 7: Labore minus",
         "comments": [
             {
                 "id": 701,
                 "text": "comment1",
-                "rate": 15
+                "rate": 2
             },
             {
                 "id": 702,
                 "text": "comment2",
-                "rate": 2
+                "rate": 5
             },
             {
                 "id": 703,
@@ -145,22 +145,22 @@
     },
     {
         "id": 8,
-        "title": "Post 5: Maxime minus",
+        "title": "Post 8: Consectetur adipisicing",
         "comments": [
             {
                 "id": 801,
                 "text": "comment1",
-                "rate": 15
+                "rate": 1
             },
             {
                 "id": 802,
                 "text": "comment2",
-                "rate": 2
+                "rate": 7
             },
             {
                 "id": 803,
                 "text": "comment2",
-                "rate": 4
+                "rate": 1
             }
         ],
         "disabled": false

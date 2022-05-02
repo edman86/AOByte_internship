@@ -20,17 +20,22 @@ class App extends Component {
     }
 
     componentDidMount() {
-        const postsWithAvarageRate = addAverageRate(data);
-        this.setState({ posts: postsWithAvarageRate });
+        
+        // data fetching imitation
+        this.setState({ posts: data });
     }
 
     render() {
+        
+        // rendering posts with calculated average rate
+        const postsWithAvarageRate = addAverageRate(this.state.posts);
+        
         return (
             <div className="App">
-                <Pool posts={this.state.posts} />
+                <Pool posts={postsWithAvarageRate} />
                 <div className='list-container'>
-                    <List posts={this.state.posts} disablePost={this.disablePost} />
-                    <List posts={this.state.posts} disablePost={this.disablePost} />
+                    <List posts={postsWithAvarageRate} disablePost={this.disablePost} />
+                    <List posts={postsWithAvarageRate} disablePost={this.disablePost} />
                 </div>
             </div>
         );
