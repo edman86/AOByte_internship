@@ -1,0 +1,25 @@
+.pagination {
+    display: flex;
+    flex-direction: row;
+    margin-top: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination__item {
+    display: block;
+    margin-right: 0.5em;
+}
+
+.pagination__item:last-child {
+    margin-right: 0;
+}
+
+.pagination__btn {
+    color: #555;
+}
+
+.current-page {
+    color: #000;
+    font-weight: 700;
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Pool from './components/Pool';
-import List from './components/List';
-import { addAverageRate } from './utils';
+import Pool from './components/Pool/Pool';
+import List from './components/List/List';
+import { addAverageRate, getCurrentPosts, getSearchedPosts } from './utils';
 import data from './data';
 
 class App extends Component {
@@ -9,6 +9,9 @@ class App extends Component {
         super(props);
         this.state = {
             posts: [],
+            currentPage: 1,
+            postsPerPage: 3,
+            keyword: ''
         };
     }
 
@@ -16,26 +19,52 @@ class App extends Component {
         const updatedPosts = this.state.posts.map(post => {
             return (post.id === id) ? { ...post, disabled: !post.disabled } : post
         });
+
         this.setState({ posts: updatedPosts });
     }
 
+    changePage = (pageNumber) => {
+        // Changes page number of posts pagination
+        this.setState({ currentPage: pageNumber }); 
+    }
+
+    search = (e) => {
+        this.setState({ keyword: e.target.value });
+    }
+
     componentDidMount() {
-        
         // data fetching imitation
         this.setState({ posts: data });
     }
 
     render() {
-        
-        // rendering posts with calculated average rate
+        // calculating average rate
         const postsWithAvarageRate = addAverageRate(this.state.posts);
-        
+
+        // searching posts by keyword
+        const searchedPosts = getSearchedPosts(postsWithAvarageRate, this.state.keyword);
+
+        // getting current posts by particular page of pagination
+        const currentPosts = getCurrentPosts(
+            this.state.currentPage,
+            this.state.postsPerPage,
+            searchedPosts
+        );
+
         return (
             <div className="App">
-                <Pool posts={postsWithAvarageRate} />
+                <Pool
+                    posts={currentPosts}
+                    currentPage={this.state.currentPage}
+                    postsPerPage={this.state.postsPerPage}
+                    totalPosts={searchedPosts.length}
+                    changePage={this.changePage}
+                    keyword={this.state.keyword}
+                    search={this.search}
+                />
                 <div className='list-container'>
-                    <List posts={postsWithAvarageRate} disablePost={this.disablePost} />
-                    <List posts={postsWithAvarageRate} disablePost={this.disablePost} />
+                    <List posts={currentPosts} disablePost={this.disablePost} />
+                    <List posts={currentPosts} disablePost={this.disablePost} />
                 </div>
             </div>
         );

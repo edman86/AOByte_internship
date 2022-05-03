@@ -1,4 +1,5 @@
-import Comments from "./Comments";
+import Comments from "../Comments/Comments";
+import './post.css';
 
 const Post = ({ post }) => {
     const { title, comments, disabled } = post;

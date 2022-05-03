@@ -34,3 +34,20 @@ export function sortList(state) {
 
     return sortedList;
 }
+
+export function getCurrentPosts(currentPage, postsPerPage, posts) {
+    // Gets posts for particular page
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+
+    return posts.slice(indexOfFirstPost, indexOfLastPost);
+}
+
+export function getSearchedPosts(posts, keyword) {
+    return posts.filter(post => {
+        return post.title.toLowerCase().includes(keyword.toLowerCase()) ||
+            post.comments.find(comment => {
+                return comment.text.toLowerCase().includes(keyword.toLowerCase());
+            })
+    });
+}

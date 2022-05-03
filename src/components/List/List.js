@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { findMaxRatePost, sortList } from '../utils';
+import { findMaxRatePost, sortList } from '../../utils';
 import { v4 as uuidv4 } from 'uuid';
+import './list.css';
 
 class List extends Component {
     constructor(props) {

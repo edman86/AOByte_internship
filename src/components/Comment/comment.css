@@ -1,0 +1,13 @@
+.comment {
+    margin-bottom: 0.4em;
+    color: #333;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dce1e6;
+}
+
+.comment__rate {
+    color: #555;
+}

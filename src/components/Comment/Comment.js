@@ -1,3 +1,5 @@
+import './comment.css';
+
 const Comment = ({ comment }) => {
     const { text, rate } = comment;
 
