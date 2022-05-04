@@ -56,6 +56,11 @@
                 "id": 303,
                 "text": "React is a framework... Ooops!",
                 "rate": 1
+            },
+            {
+                "id": 304,
+                "text": "My favorite russian word? jay-SON",
+                "rate": 7
             }
         ],
         "disabled": false

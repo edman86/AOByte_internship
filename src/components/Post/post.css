@@ -13,6 +13,29 @@
     margin-bottom: 0.5em;
 }
 
+.post__new-comment-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.post__new-comment {
+    outline: none;
+    resize: none;
+    width: 90%;
+}
+
+.comment-btn {
+    background-color: var(--secondary-btn);
+    color: #fff;
+    padding: 0.2em 0.5em;
+    border-radius: 0.2em;
+}
+
+.comment-btn:hover {
+    background-color: var(--primary-btn);
+}
+
 .disabled {
     opacity: 0.3;
 }

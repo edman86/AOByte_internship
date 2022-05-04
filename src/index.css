@@ -1,4 +1,9 @@
 :root {
+    --backround-primary: #edeef0;
+    --primary-btn: #6c757d;
+    --secondary-btn: #8c97a1;
+    --primary-border: #dce1e6;
+    
     font-size: 1.125rem;
     box-sizing: border-box;
 }
@@ -16,7 +21,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     height: 100vh;
-    background-color: #edeef0;
+    background-color: var(--backround-primary);
 }
 
 ul {

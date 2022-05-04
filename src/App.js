@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Pool from './components/Pool/Pool';
 import List from './components/List/List';
 import { addAverageRate, getCurrentPosts, getSearchedPosts } from './utils';
+import { v4 as uuidv4 } from 'uuid';
 import data from './data';
 
 class App extends Component {
@@ -25,11 +26,31 @@ class App extends Component {
 
     changePage = (pageNumber) => {
         // Changes page number of posts pagination
-        this.setState({ currentPage: pageNumber }); 
+        this.setState({ currentPage: pageNumber });
     }
 
     search = (e) => {
         this.setState({ keyword: e.target.value });
+    }
+
+    addComment = (id, comment) => {
+        const updatedPosts = this.state.posts.map(post => {
+            if (post.id === id) {
+                const comments = [
+                    ...post.comments,
+                    {
+                        id: uuidv4(),
+                        text: comment,
+                        rate: 0 
+                    }];
+                console.log('comment added');    
+                return { ...post, comments };    
+            } else {
+                return post;
+            }
+        });
+
+        this.setState({ posts: updatedPosts });
     }
 
     componentDidMount() {
@@ -61,6 +82,7 @@ class App extends Component {
                     changePage={this.changePage}
                     keyword={this.state.keyword}
                     search={this.search}
+                    addComment={this.addComment}
                 />
                 <div className='list-container'>
                     <List posts={currentPosts} disablePost={this.disablePost} />
