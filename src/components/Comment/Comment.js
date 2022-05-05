@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { getCommentRateColor } from '../../utils';
 import './comment.css';
 
 class Comment extends Component {
@@ -32,6 +33,7 @@ class Comment extends Component {
                         <button
                             type="button"
                             className={comment.userId ? 'comment__rate liked' : 'comment__rate'}
+                            style={{color: getCommentRateColor(rate)}}
                             onClick={() => addLike(postId, id)}
                         >
                             &hearts; {rate}

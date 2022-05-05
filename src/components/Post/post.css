@@ -59,9 +59,9 @@
     background-color: var(--primary-btn);
 }
 
-
 .disabled {
     opacity: 0.3;
+    pointer-events:none;
 }
 
 .picker-btn-container {

@@ -51,3 +51,15 @@ export function getSearchedPosts(posts, keyword) {
             })
     });
 }
+
+export function getCommentRateColor(rate) {
+    if (rate > 4) {
+        return 'green';
+    } else if (rate >= 3) {
+        return 'orange';
+    } else if (rate < 3) {
+        return 'red';
+    } else {
+        return 'black'; 
+    }
+}
