@@ -2,6 +2,8 @@
     --backround-primary: #edeef0;
     --primary-btn: #6c757d;
     --secondary-btn: #8c97a1;
+    --primary-text: #7f8285;
+    --secondary-text: #222;
     --primary-border: #dce1e6;
     
     font-size: 1.125rem;
@@ -69,9 +71,9 @@ input {
 .btn {
     padding: 0.5em 1em;
     font-size: 1.7rem;
-    color: #7f8285;
+    color: var(--primary-text);
 }
 
 .btn:hover {
-    color: #222;
+    color: var(--secondary-text);
 }

@@ -41,10 +41,35 @@ class App extends Component {
                     {
                         id: uuidv4(),
                         text: comment,
-                        rate: 0 
-                    }];
-                console.log('comment added');    
-                return { ...post, comments };    
+                        rate: 0
+                    }
+                ];
+                return { ...post, comments };
+            } else {
+                return post;
+            }
+        });
+
+        this.setState({ posts: updatedPosts });
+    }
+
+    addLike = (postId, commentId) => {
+        const updatedPosts = this.state.posts.map(post => {
+            if (post.id === postId) {
+                const updatedComments = post.comments.map(comment => {
+                    if (comment.id === commentId) {
+                        // checking if current user already make like
+                        if (comment.userId) {
+                            return { ...comment, rate: --comment.rate, userId: null };
+                        } else {
+                            return { ...comment, rate: ++comment.rate, userId: 'someId' };
+                        }
+                    } else {
+                        return comment;
+                    }
+                });
+                console.log('works');
+                return { ...post, comments: updatedComments };
             } else {
                 return post;
             }
@@ -83,6 +108,7 @@ class App extends Component {
                     keyword={this.state.keyword}
                     search={this.search}
                     addComment={this.addComment}
+                    addLike={this.addLike}
                 />
                 <div className='list-container'>
                     <List posts={currentPosts} disablePost={this.disablePost} />
