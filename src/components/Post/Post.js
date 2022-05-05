@@ -45,12 +45,17 @@ class Post extends Component {
 
     render() {
         const { id, title, comments, disabled } = this.props.post;
-        const { addLike } = this.props;
+        const { addLike, addReply } = this.props;
 
         return (
             <li className={disabled ? 'post disabled' : 'post'}>
                 <h2 className="post__title">{title}</h2>
-                <Comments postId={id} comments={comments} addLike={addLike} />
+                <Comments 
+                    postId={id} 
+                    comments={comments} 
+                    addLike={addLike} 
+                    addReply={addReply}    
+                />
 
                 <button
                     type="button"
@@ -106,7 +111,6 @@ class Post extends Component {
                             }
                         </div>
 
-
                         <button
                             type="button"
                             className="comment-btn"
@@ -115,11 +119,8 @@ class Post extends Component {
                         >
                             Add
                         </button>
-
                     </section>
                 </section>
-
-
             </li>
         );
 

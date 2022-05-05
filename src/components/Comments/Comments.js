@@ -1,7 +1,7 @@
 import Comment from "../Comment/Comment";
 import './comments.css';
 
-const Comments = ({ postId, comments, addLike }) => {
+const Comments = ({ postId, comments, addLike, addReply }) => {
     return (
         <ul className="comments">
             {comments.map((comment) => {
@@ -10,7 +10,8 @@ const Comments = ({ postId, comments, addLike }) => {
                         key={comment.id} 
                         comment={comment} 
                         postId={postId} 
-                        addLike={addLike} 
+                        addLike={addLike}
+                        addReply={addReply} 
                     />
                 );
             })}

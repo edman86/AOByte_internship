@@ -12,7 +12,8 @@ const Pool = ({
     keyword,
     search,
     addComment,
-    addLike
+    addLike,
+    addReply
 }) => {
     return (
         <section className="posts">
@@ -26,7 +27,8 @@ const Pool = ({
                             key={post.id} 
                             post={post} 
                             addComment={addComment}
-                            addLike={addLike} 
+                            addLike={addLike}
+                            addReply={addReply} 
                         />
                     );
                 })}

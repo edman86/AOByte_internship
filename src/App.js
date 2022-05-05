@@ -68,7 +68,27 @@ class App extends Component {
                         return comment;
                     }
                 });
-                console.log('works');
+
+                return { ...post, comments: updatedComments };
+            } else {
+                return post;
+            }
+        });
+
+        this.setState({ posts: updatedPosts });
+    }
+
+    addReply = (postId, commentId, reply) => {
+        const updatedPosts = this.state.posts.map(post => {
+            if (post.id === postId) {
+                const updatedComments = post.comments.map(comment => {
+                    if (comment.id === commentId) {
+                        return { ...comment, reply: reply };
+                    } else {
+                        return comment;
+                    }
+                });
+
                 return { ...post, comments: updatedComments };
             } else {
                 return post;
@@ -109,6 +129,7 @@ class App extends Component {
                     search={this.search}
                     addComment={this.addComment}
                     addLike={this.addLike}
+                    addReply={this.addReply}
                 />
                 <div className='list-container'>
                     <List posts={currentPosts} disablePost={this.disablePost} />
