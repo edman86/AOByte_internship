@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { findMaxRatePost, sortList } from '../../utils';
 import { v4 as uuidv4 } from 'uuid';
-import './list.css';
+import './List.css';
 
 class List extends Component {
     constructor(props) {
@@ -32,7 +32,7 @@ class List extends Component {
         this.setState({ list: updatedList });
 
         // disabing post
-        this.props.disablePost(max.id);
+        this.props.toggleDisableProperty(max.id);
     }
 
     removeFromList = (id) => {
@@ -46,7 +46,7 @@ class List extends Component {
         this.setState({ list: updatedList });
 
         // enabling post
-        this.props.disablePost(removed.mainId);
+        this.props.toggleDisableProperty(removed.mainId);
     }
 
     sort = (e) => {

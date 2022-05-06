@@ -1,7 +1,7 @@
 import Post from "../Post/Post";
 import Pagination from "../Pagination/Pagination";
 import SearchBar from "../SearchBar/SearchBar";
-import './pool.css';
+import './Pool.css';
 
 const Pool = ({
     posts,
@@ -10,7 +10,7 @@ const Pool = ({
     totalPosts,
     changePage,
     keyword,
-    search,
+    searchPost,
     addComment,
     addLike,
     addReply
@@ -18,7 +18,7 @@ const Pool = ({
     return (
         <section className="posts">
 
-            <SearchBar keyword={keyword} search={search} />
+            <SearchBar keyword={keyword} searchPost={searchPost} />
 
             <ul className="posts__list">
                 {posts.map(post => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Comments from "../Comments/Comments";
 import Picker from 'emoji-picker-react';
-import './post.css';
+import './Post.css';
 
 class Post extends Component {
     constructor(props) {

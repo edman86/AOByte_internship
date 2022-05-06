@@ -1,6 +1,6 @@
-import './searchBar.css';
+import './SearchBar.css';
 
-const SearchBar = ({ keyword, search }) => {
+const SearchBar = ({ keyword, searchPost }) => {
     return (
         <section className="search-bar">
             <label 
@@ -14,7 +14,7 @@ const SearchBar = ({ keyword, search }) => {
                 id="searchBar"
                 className="search-bar__input"
                 value={keyword}
-                onChange={search}
+                onChange={searchPost}
             />
         </section>
     );

@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import Pool from './components/Pool/Pool';
 import List from './components/List/List';
-import { addAverageRate, getCurrentPosts, getSearchedPosts } from './utils';
-import { v4 as uuidv4 } from 'uuid';
+import { 
+    addAverageRate, 
+    getCurrentPosts, 
+    getSearchedPosts, 
+    toggleDisable, 
+    addComment, 
+    addLike,
+    addReply 
+} from './utils';
 import data from './data';
 
 class App extends Component {
@@ -11,16 +18,12 @@ class App extends Component {
         this.state = {
             posts: [],
             currentPage: 1,
-            postsPerPage: 3,
             keyword: ''
         };
     }
 
-    disablePost = (id) => {
-        const updatedPosts = this.state.posts.map(post => {
-            return (post.id === id) ? { ...post, disabled: !post.disabled } : post
-        });
-
+    toggleDisableProperty = (id) => {
+        const updatedPosts = toggleDisable(this.state.posts, id);
         this.setState({ posts: updatedPosts });
     }
 
@@ -29,72 +32,22 @@ class App extends Component {
         this.setState({ currentPage: pageNumber });
     }
 
-    search = (e) => {
+    searchPost = (e) => {
         this.setState({ keyword: e.target.value });
     }
 
     addComment = (id, comment) => {
-        const updatedPosts = this.state.posts.map(post => {
-            if (post.id === id) {
-                const comments = [
-                    ...post.comments,
-                    {
-                        id: uuidv4(),
-                        text: comment,
-                        rate: 0
-                    }
-                ];
-                return { ...post, comments };
-            } else {
-                return post;
-            }
-        });
-
+        const updatedPosts = addComment(this.state.posts, id, comment);
         this.setState({ posts: updatedPosts });
     }
 
     addLike = (postId, commentId) => {
-        const updatedPosts = this.state.posts.map(post => {
-            if (post.id === postId) {
-                const updatedComments = post.comments.map(comment => {
-                    if (comment.id === commentId) {
-                        // checking if current user already make like
-                        if (comment.userId) {
-                            return { ...comment, rate: --comment.rate, userId: null };
-                        } else {
-                            return { ...comment, rate: ++comment.rate, userId: 'someId' };
-                        }
-                    } else {
-                        return comment;
-                    }
-                });
-
-                return { ...post, comments: updatedComments };
-            } else {
-                return post;
-            }
-        });
-
+        const updatedPosts = addLike(this.state.posts, postId, commentId);
         this.setState({ posts: updatedPosts });
     }
 
     addReply = (postId, commentId, reply) => {
-        const updatedPosts = this.state.posts.map(post => {
-            if (post.id === postId) {
-                const updatedComments = post.comments.map(comment => {
-                    if (comment.id === commentId) {
-                        return { ...comment, reply: reply };
-                    } else {
-                        return comment;
-                    }
-                });
-
-                return { ...post, comments: updatedComments };
-            } else {
-                return post;
-            }
-        });
-
+        const updatedPosts = addReply(this.state.posts, postId, commentId, reply);
         this.setState({ posts: updatedPosts });
     }
 
@@ -104,6 +57,8 @@ class App extends Component {
     }
 
     render() {
+        const postsPerPage = 3;
+        
         // calculating average rate
         const postsWithAvarageRate = addAverageRate(this.state.posts);
 
@@ -113,7 +68,7 @@ class App extends Component {
         // getting current posts by particular page of pagination
         const currentPosts = getCurrentPosts(
             this.state.currentPage,
-            this.state.postsPerPage,
+            postsPerPage,
             searchedPosts
         );
 
@@ -122,18 +77,24 @@ class App extends Component {
                 <Pool
                     posts={currentPosts}
                     currentPage={this.state.currentPage}
-                    postsPerPage={this.state.postsPerPage}
+                    postsPerPage={postsPerPage}
                     totalPosts={searchedPosts.length}
                     changePage={this.changePage}
                     keyword={this.state.keyword}
-                    search={this.search}
+                    searchPost={this.searchPost}
                     addComment={this.addComment}
                     addLike={this.addLike}
                     addReply={this.addReply}
                 />
                 <div className='list-container'>
-                    <List posts={currentPosts} disablePost={this.disablePost} />
-                    <List posts={currentPosts} disablePost={this.disablePost} />
+                    <List 
+                        posts={currentPosts} 
+                        toggleDisableProperty={this.toggleDisableProperty} 
+                    />
+                    <List 
+                        posts={currentPosts} 
+                        toggleDisableProperty={this.toggleDisableProperty} 
+                    />
                 </div>
             </div>
         );

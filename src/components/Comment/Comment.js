@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getCommentRateColor } from '../../utils';
-import './comment.css';
+import './Comment.css';
 
 class Comment extends Component {
     constructor(props) {

@@ -1,5 +1,4 @@
 import Comment from "../Comment/Comment";
-import './comments.css';
 
 const Comments = ({ postId, comments, addLike, addReply }) => {
     return (
