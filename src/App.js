@@ -22,31 +22,31 @@ class App extends Component {
         };
     }
 
-    toggleDisableProperty = (id) => {
+    onToggleDisableProperty = (id) => {
         const updatedPosts = toggleDisable(this.state.posts, id);
         this.setState({ posts: updatedPosts });
     }
 
-    changePage = (pageNumber) => {
+    onChangePage = (pageNumber) => {
         // Changes page number of posts pagination
         this.setState({ currentPage: pageNumber });
     }
 
-    searchPost = (e) => {
+    onSearchPost = (e) => {
         this.setState({ keyword: e.target.value });
     }
 
-    addComment = (id, comment) => {
+    onAddComment = (id, comment) => {
         const updatedPosts = addComment(this.state.posts, id, comment);
         this.setState({ posts: updatedPosts });
     }
 
-    addLike = (postId, commentId) => {
+    onAddLike = (postId, commentId) => {
         const updatedPosts = addLike(this.state.posts, postId, commentId);
         this.setState({ posts: updatedPosts });
     }
 
-    addReply = (postId, commentId, reply) => {
+    onAddReply = (postId, commentId, reply) => {
         const updatedPosts = addReply(this.state.posts, postId, commentId, reply);
         this.setState({ posts: updatedPosts });
     }
@@ -79,21 +79,21 @@ class App extends Component {
                     currentPage={this.state.currentPage}
                     postsPerPage={postsPerPage}
                     totalPosts={searchedPosts.length}
-                    changePage={this.changePage}
+                    changePage={this.onChangePage}
                     keyword={this.state.keyword}
-                    searchPost={this.searchPost}
-                    addComment={this.addComment}
-                    addLike={this.addLike}
-                    addReply={this.addReply}
+                    searchPost={this.onSearchPost}
+                    addComment={this.onAddComment}
+                    addLike={this.onAddLike}
+                    addReply={this.onAddReply}
                 />
                 <div className='list-container'>
                     <List 
                         posts={currentPosts} 
-                        toggleDisableProperty={this.toggleDisableProperty} 
+                        toggleDisableProperty={this.onToggleDisableProperty} 
                     />
                     <List 
                         posts={currentPosts} 
-                        toggleDisableProperty={this.toggleDisableProperty} 
+                        toggleDisableProperty={this.onToggleDisableProperty} 
                     />
                 </div>
             </div>

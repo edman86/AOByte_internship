@@ -23,7 +23,10 @@ class List extends Component {
         if (!max) return;
 
         updatedList.push({
-            id: uuidv4(),
+            // Creating new id for brand new entity in list because,
+            // the list item !== post. They are different entities,
+            // so they id's different too.
+            id: uuidv4(), 
             title: max.title,
             rate: max.averageRate,
             mainId: max.id
