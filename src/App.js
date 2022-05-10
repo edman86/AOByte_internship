@@ -10,15 +10,18 @@ class App extends React.Component {
         };
     }
 
-
-
     render() {
         const schema = new Schema({
             firstName: {
                 type: 'string',
                 validators: [{min: 3}, {max: 8}],
                 message: 'The field must contain min {min} and max {max} letters'
-            }
+            },
+            email: {
+                type: 'string',
+                validators: 'email',
+                message: 'The field must contain character {character}'
+            },
         })
 
         console.log(schema);

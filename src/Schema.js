@@ -5,18 +5,20 @@ class Schema {
         this.validators = {
             min: minimum,
             max: maximum,
+            email: checkEmail
         };
         this.createRules();
     }
 
     createRules = () => {
-        let message = "Default Error Message";
-        let vals = [];
-        let extras = [];
-        let rules = {};
 
         for (let rule of Object.keys(this.schema)) {
-            // this.rules[rule] = this.schema[rule];
+            // initializing default values 
+            let message = "Default Error Message";
+            let vals = [];
+            let extras = [];
+            let rules = {};
+            let validators = [];
 
             rules.type = this.schema[rule].type;
 
@@ -24,28 +26,37 @@ class Schema {
                 message = this.schema[rule].message;
             }
 
-            // if (this.schema[rule].hasOwnProperty('validators')) {
+            // if validators are not repesented by an array
+            if (!Array.isArray(this.schema[rule].validators)) {
+                validators.push(this.schema[rule].validators);
+            } else {
+                validators = [...this.schema[rule].validators];
+            }
 
-            if (Array.isArray(this.schema[rule].validators)) {
-                const validators = this.schema[rule].validators;
-
-                validators.forEach(validator => {
+            validators.forEach(validator => {
+                if (typeof validator === 'object') {
+                    // If validator is an object => 
+                    // object's key goes to 'vals' array 
+                    // and value goes to 'extras' array.
+                    // Example: vals['min', 'max'], extras[3, 8]
                     vals.push(...Object.keys(validator));
                     extras.push(...Object.values(validator));
-                })
 
-                // this.rules[rule].validators = vals.map(val => this.validators[val](extras, message));
-                rules.validators =  vals.map(val => this.validators[val](extras, message));
-            }
-            // }
+                } else if (typeof validator === 'string') {
+                    vals.push(validator);
+                }
+            })
+
+            rules.validators = vals.map(val => this.validators[val](extras, message));
+
+            // creating rule
             this.rules[rule] = rules;
         }
     }
 }
 
-const minimum = (extra=undefined, message) => {
+const minimum = (extra = undefined, message) => {
     if (extra) {
-
         if (Array.isArray(extra)) {
 
             const text = message;
@@ -54,7 +65,6 @@ const minimum = (extra=undefined, message) => {
 
             for (let i = 0; i < extra.length; i++) {
                 message = message.replace('{' + result[i] + '}', extra[i]);
-                console.log(extra[i]);
             }
         }
     }
@@ -66,9 +76,8 @@ const minimum = (extra=undefined, message) => {
     }
 }
 
-const maximum = (extra=undefined, message) => {
+const maximum = (extra = undefined, message) => {
     if (extra) {
-
         if (Array.isArray(extra)) {
 
             const text = message;
@@ -77,13 +86,21 @@ const maximum = (extra=undefined, message) => {
 
             for (let i = 0; i < extra.length; i++) {
                 message = message.replace('{' + result[i] + '}', extra[i]);
-                console.log(extra[i]);
             }
         }
     }
     return {
         validate: (el, val) => {
             return el.length <= val;
+        },
+        message
+    }
+}
+
+const checkEmail = (extra = undefined, message) => {
+    return {
+        validate: (el, val) => {
+            return 'correct email';
         },
         message
     }
