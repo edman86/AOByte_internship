@@ -1,6 +1,6 @@
-const FormInput = (props) => {
+const Input = (props) => {
     
-    const { label, errorMessage, setValue, id, ...inputProps } = props;
+    const { label, errorMessage, setValue, id, name, ...inputProps } = props;
     
     return (
         <div className="form-input">
@@ -9,7 +9,7 @@ const FormInput = (props) => {
                 id={`input${id}`}
                 className='input'
                 {...inputProps}
-                onChange={setValue}
+                onChange={ (e) => setValue(e.target.value, name) }
             />
             <span className="error">{errorMessage}</span>
         </div>
@@ -18,4 +18,4 @@ const FormInput = (props) => {
 
 }
 
-export default FormInput;
+export default Input;

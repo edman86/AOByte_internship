@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Schema from './Schema';
+import Form from './components/Form/Form';
 
 class App extends React.Component {
     constructor(props) {
@@ -17,10 +18,17 @@ class App extends React.Component {
                 validators: [{min: 3}, {max: 8}],
                 message: 'The field must contain min {min} and max {max} letters'
             },
+            secondName: {
+                type: 'string',
+                validators: {min: 3},
+            },
+            nickName: {
+                type: 'string',
+                validators: {max: 8},
+            },
             email: {
                 type: 'string',
                 validators: 'email',
-                message: 'The field must contain character {character}'
             },
         })
 
@@ -28,7 +36,7 @@ class App extends React.Component {
 
         return (
             <div className='App'>
-
+                <Form schema={schema} />
             </div>
         );
     }
