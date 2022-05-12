@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 class Schema {
     constructor(schema) {
         this.schema = schema || {};
@@ -6,17 +8,14 @@ class Schema {
             min: minimum,
             max: maximum,
             email: checkEmail,
-            required: checkRequired,
         };
         this._createRules();
     }
 
     _createRules = () => {
-        // сreats validation rules object from schema
-
+        // сreates validation rules object from schema
         for (let rule of Object.keys(this.schema)) {
 
-            // initializing default values 
             let message;
             let vals = [];
             let extras = {};
@@ -50,11 +49,19 @@ class Schema {
                         validatorExtra = value;
                     }
 
-                    vals.push(validatorName);
-                    extras[validatorName] = validatorExtra;
-                
+                    if (validatorName === 'required') {
+                        rules.required = true;
+                    } else {
+                        vals.push(validatorName);
+                        extras[validatorName] = validatorExtra;
+                    }
+
                 } else if (typeof validator === 'string') {
-                    vals.push(validator);
+                    if (validator.toLowerCase() === 'required') {
+                        rules.required = true;
+                    } else {
+                        vals.push(validator);
+                    }
                 }
             })
 
@@ -62,6 +69,13 @@ class Schema {
             // That's why we invoke standart validators at this.validators property.
             // And in order to call them, we use the string representation of the validators.
             // Example: this.validators['min']({min: 3}, 'must contain min {min} chars')
+            // will create an object => {
+            //   validate: ('Ada Lovelace') => {
+            //          return 'Ada Lovelace'.length >= 3;
+            //      },
+            //      must contain min 3 chars
+            //   }
+
             rules.validators = vals.map(val => this.validators[val](extras, message));
 
             // creating rule
@@ -69,60 +83,90 @@ class Schema {
         }
     }
 
+
     createInputsArray = () => {
         let inputs = [];
 
-        for (let [inputName, inputValue] of Object.entries(this.rules)) {
+        for (let [inputName, inputData] of Object.entries(this.rules)) {
             let inputType;
             let label;
-            
-            if (inputValue.type === 'string' && inputName.toLowerCase().includes('password')) {
+            let value;
+            let required;
+
+            if (inputData.type === 'string' && inputName.toLowerCase().includes('password')) {
                 inputType = 'password';
-            } else if (inputValue.type === 'string' && inputName.toLowerCase().includes('email')) {
-                inputType = 'email';
-            } else if (inputValue.type === 'string') {
+                value = '';
+            } else if (inputData.type === 'string') {
                 inputType = 'text';
-            } else if (inputValue.type === 'numeric') {
+                value = '';
+            } else if (inputData.type === 'numeric') {
                 inputType = 'number';
+                value = 0;
+            } else if (inputData.type.toLowerCase().includes('array')) {
+                inputType = 'array';
+                value = [];
+            }
+
+            if (inputData.required) {
+                required = true;
+            } else {
+                required = false;
             }
 
             label = createInputName(inputName);
 
-            inputs.push({name: inputName, label: label, type: inputType});
+            inputs.push({
+                id: uuidv4(),
+                name: inputName,
+                label: label,
+                type: inputType,
+                value: value,
+                required: required,
+                errorMessage: '',
+                isValid: true
+            });
         }
 
         return inputs;
     }
 
     validate = (payload) => {
-        const values = { ...payload.values };
-        const errors = { ...payload.errors };
+        const inputs = [...payload];
 
-        // validation
-        for (let [key, value] of Object.entries(values)) {
-            // Errors for particular key (example: 'firstName')
-            // will be represented by an array with error messages,
-            // because particular input can have 2 or more validators.  
-            errors[key] = [];
-            
-            this.rules[key].validators
-                .forEach(validator => {
-                    const isValid = validator.validate(value);
+        const updatedInputs = inputs.map(input => {
+            let updInput = input;
+            if (input.required && !input.value) {
+                updInput = { ...input, isValid: false, errorMessage: 'The input field must not be empty!' }
+            } else if (!input.value) {
+                updInput = { ...input, isValid: true, errorMessage: '' };
+            } else if (input.required && input.value) {
+                updInput = { ...input, isValid: true, errorMessage: '' };
+            } else {
+                for (let validator of this.rules[input.name].validators) {
+                    const isValid = validator.validate(input.value);
                     if (!isValid) {
-                        errors[key].push(validator.message);
+                        updInput = { ...input, isValid: false, errorMessage: validator.message };
+                        break;
+                    } else {
+                        updInput = { ...input, isValid: true, errorMessage: '' };
                     }
-                })
-        }
+                }
 
-        return errors;
+
+            }
+            return updInput;
+        });
+
+        return updatedInputs;
     }
+
 }
 
 const minimum = (extra = undefined, message) => {
     if (!message) {
         message = 'The field must contain minimum {min} letters';
     }
-    
+
     if (extra) {
         const text = message;
         const result = text.match(/{([^}]+)}/g)
@@ -145,7 +189,7 @@ const maximum = (extra = undefined, message) => {
     if (!message) {
         message = 'The field must contain maximum {max} letters';
     }
-    
+
     if (extra) {
         const text = message;
         const result = text.match(/{([^}]+)}/g)
@@ -164,10 +208,11 @@ const maximum = (extra = undefined, message) => {
     }
 }
 
+
 const checkEmail = (extra = undefined, message) => {
     if (!message) {
         message = 'The email must contain @ symbol and domain name';
-    } 
+    }
 
     return {
         validate: (email) => {
@@ -181,18 +226,10 @@ const checkEmail = (extra = undefined, message) => {
     }
 }
 
-const checkRequired = (extra = undefined, message) => {
-    return {
-        validate: (value) => {
-            if (value === '') return false;
-            return true;
-        },
-        message
-    }
-}
 
 const createInputName = (name) => {
-    return name.split(/(?=[A-Z])/).join(' ').toLowerCase();    
+    return name.split(/(?=[A-Z])/).join(' ').toLowerCase();
 }
+
 
 export default Schema;

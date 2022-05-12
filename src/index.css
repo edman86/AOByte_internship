@@ -21,21 +21,43 @@ input {
   font-family: inherit;
   font-size: 1rem;
   border: none;
-  border-bottom: 1px solid #ccc;
-}
-
-.input:invalid ~ .error {
-  display: block;
 }
 
 .form-input {
+  max-width: 800px;
   display: flex;
   flex-direction: column;
-  margin: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.input {
+  border: 1px solid #ccc;
+  border-radius: 0.3em;
+}
+
+.label {
+  text-transform: capitalize;
+}
+
+.required::after {
+  content: '*';
+  color: red;
+  margin-left: 10px;
+}
+
+.input-error {
+  border: 1px solid red;
+}
+
+.hidden {
+  display: none;
 }
 
 .error {
   color: red;
-  display: none;
+  display: block;
+  margin-top: 0;
 }
 

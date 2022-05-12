@@ -7,33 +7,13 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            
         };
     }
 
     render() {
-        const schema = new Schema({
-            firstName: {
-                type: 'string',
-                validators: [{min: 3}, {max: 8}],
-                message: 'The field must contain min {min} and max {max} letters'
-            },
-            secondName: {
-                type: 'string',
-                validators: {min: 3},
-            },
-            nickName: {
-                type: 'string',
-                validators: {max: 8},
-            },
-            email: {
-                type: 'string',
-                validators: 'email',
-            },
-        })
-
         console.log(schema);
-
+        
         return (
             <div className='App'>
                 <Form schema={schema} />
@@ -42,6 +22,31 @@ class App extends React.Component {
     }
 
 }
+
+const schema = new Schema({
+    firstName: {
+        type: 'string',
+        validators: [{min: 3}, {max: 8}],
+        // message: 'The field must contain min {min} and max {max} letters'
+    },
+    nickRequired: {
+        type: 'string',
+        validators: 'required',
+    },
+    numberField: {
+        type: 'numeric',
+        validators: 'required',
+    },
+    email: {
+        type: 'string',
+        validators: 'email',
+    },
+    password: {
+        type: 'string',
+        validators: {min: 4},
+    },
+})
+
 
 export default App;
 
