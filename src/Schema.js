@@ -61,8 +61,11 @@ class Schema {
                     if (validator.toLowerCase() === 'required') {
                         rules.required = true;
                     } else {
-                        vals.push(validator);
+                        vals.push(validator.toLowerCase());
                     }
+                } else if (typeof validator === 'function') {
+                    vals.push(validator);
+                    // console.log();
                 }
             })
 
@@ -77,13 +80,18 @@ class Schema {
             //      must contain min 3 chars
             //   }
 
-            rules.validators = vals.map(val => this.validators[val](extras, message));
+            rules.validators = vals.map(val => {
+                if (typeof val === 'function') {
+                    return val(extras, message);
+                } else {
+                    return this.validators[val](extras, message)
+                }
+            });
 
             // creating rule
             this.rules[rule] = rules;
         }
     }
-
 
     createInputsArray = () => {
         let inputs = [];

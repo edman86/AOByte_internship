@@ -7,13 +7,13 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            
+
         };
     }
 
     render() {
         console.log(schema);
-        
+
         return (
             <div className='App'>
                 <Form schema={schema} />
@@ -23,11 +23,23 @@ class App extends React.Component {
 
 }
 
+const passportValidator = (extra, message) => {
+    if (!message) {
+        message = 'The passport number must include two letters and seven digits';
+    }
+
+    return {
+        validate: (val) => {
+            return val.match(/^[a-zA-Z]{2}[0-9]{7}$/);
+        },
+        message
+    }
+}
+
 const schema = new Schema({
     firstName: {
         type: 'string',
-        validators: [{min: 3}, {max: 8}],
-        // message: 'The field must contain min {min} and max {max} letters'
+        validators: [{ min: 3 }, { max: 8 }],
     },
     nickRequired: {
         type: 'string',
@@ -45,9 +57,13 @@ const schema = new Schema({
         type: 'array[string]',
         validators: 'phone',
     },
+    passport: {
+        type: 'string',
+        validators: passportValidator
+    },
     password: {
         type: 'string',
-        validators: {min: 4},
+        validators: { min: 4 },
     },
 })
 
