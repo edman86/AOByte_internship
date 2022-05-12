@@ -1,27 +1,33 @@
 const Input = (props) => {
-    
-    const { type, label, index, setValue, id, name, value, required, isValid } = props;
-    
+    const { 
+        type, 
+        label, 
+        index, 
+        setValue, 
+        id, 
+        name, 
+        value, 
+        required, 
+        isValid 
+    } = props;
+
     return (
         <>
-         
-            <label 
+            <label
                 className={`label ${required && 'required'}`}
                 htmlFor={`input${id}`}
             >
                 {label}
             </label>
-           
-        
+
             <input
                 className={`input ${!isValid && 'input-error'}`}
                 id={`input${id}`}
                 type={type}
                 name={name}
                 value={value}
-                onChange={ (e) => setValue(e.target.value, index) }
+                onChange={(e) => setValue(e.target.value, index)}
             />
-            
         </>
     );
 

@@ -23,6 +23,15 @@ input {
   border: none;
 }
 
+ul {
+  padding-left: 2em;
+  margin: 0;
+}
+
+small {
+  max-width: 300px;
+}
+
 .form-input {
   max-width: 800px;
   display: flex;

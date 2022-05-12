@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Input from '../Input';
+import InputArray from '../InputArray';
 
 class Form extends Component {
     constructor(props) {
@@ -38,26 +39,50 @@ class Form extends Component {
         return (
             <form className="form" onSubmit={this.handleSubmit}>
                 {this.state.inputs.map((input, index) => {
-                    return (
-                        <div key={input.id} className="form-input">
-                            <Input
-                                type={input.type}
-                                label={input.label}
-                                name={input.name}
-                                id={input.name}
-                                index={index}
-                                value={this.state.inputs[index].value}
-                                setValue={this.setValue}
-                                required={input.required}
-                                isValid={input.isValid}
-                            />
-                            <small
-                                className={this.state.inputs[index].isValid ? 'hidden' : 'error'}
-                            >
-                                {this.state.inputs[index].errorMessage}
-                            </small>
-                        </div>
-                    );
+                    if (input.type === 'array') {
+                        return (
+                            <div key={input.id} className="form-input">
+                                <InputArray
+                                    type={input.type}
+                                    label={input.label}
+                                    name={input.name}
+                                    id={input.name}
+                                    index={index}
+                                    value={this.state.inputs[index].value}
+                                    setValue={this.setValue}
+                                    required={input.required}
+                                    isValid={input.isValid}
+                                />
+                                <small
+                                    className={this.state.inputs[index].isValid ? 'hidden' : 'error'}
+                                >
+                                    {this.state.inputs[index].errorMessage}
+                                </small>
+                            </div>
+                        );
+                    } else {
+                        return (
+                            <div key={input.id} className="form-input">
+                                <Input
+                                    type={input.type}
+                                    label={input.label}
+                                    name={input.name}
+                                    id={input.name}
+                                    index={index}
+                                    value={this.state.inputs[index].value}
+                                    setValue={this.setValue}
+                                    required={input.required}
+                                    isValid={input.isValid}
+                                />
+                                <small
+                                    className={this.state.inputs[index].isValid ? 'hidden' : 'error'}
+                                >
+                                    {this.state.inputs[index].errorMessage}
+                                </small>
+                            </div>
+                        );
+                    }
+
                 })}
 
                 <br />

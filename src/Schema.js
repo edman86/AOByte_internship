@@ -8,6 +8,7 @@ class Schema {
             min: minimum,
             max: maximum,
             email: checkEmail,
+            phone: checkPhoneNumber,
         };
         this._createRules();
     }
@@ -141,9 +142,21 @@ class Schema {
                 updInput = { ...input, isValid: true, errorMessage: '' };
             } else if (input.required && input.value) {
                 updInput = { ...input, isValid: true, errorMessage: '' };
+            } else if (input.type === 'array' && !input.value.length && !input.required) {
+                updInput = { ...input, isValid: true, errorMessage: '' };
             } else {
                 for (let validator of this.rules[input.name].validators) {
-                    const isValid = validator.validate(input.value);
+                    let isValid;
+                    if (Array.isArray(input.value)) {
+                        console.log('validating arr');
+                        for (let val of input.value) {
+                            isValid = validator.validate(val);
+                            if (!isValid) break;
+                        }
+                    } else {
+                        isValid = validator.validate(input.value);
+                    }
+
                     if (!isValid) {
                         updInput = { ...input, isValid: false, errorMessage: validator.message };
                         break;
@@ -221,6 +234,19 @@ const checkEmail = (extra = undefined, message) => {
                 .match(
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 );
+        },
+        message
+    }
+}
+
+const checkPhoneNumber = (extra = undefined, message) => {
+    if (!message) {
+        message = 'The phone number must be in the format like: 043123456 or 43123456 or +37443123456';
+    }
+
+    return {
+        validate: (phoneNumber) => {
+            return phoneNumber.match(/^(([+374]{4}|[0]{1}))?([1-9]{2})(\d{6})$/);
         },
         message
     }

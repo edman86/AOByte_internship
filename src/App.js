@@ -41,6 +41,10 @@ const schema = new Schema({
         type: 'string',
         validators: 'email',
     },
+    phoneNumbers: {
+        type: 'array[string]',
+        validators: 'phone',
+    },
     password: {
         type: 'string',
         validators: {min: 4},
