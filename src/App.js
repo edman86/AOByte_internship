@@ -3,24 +3,12 @@ import './App.css';
 import Schema from './Schema';
 import Form from './components/Form/Form';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        };
-    }
-
-    render() {
-        console.log(schema);
-
-        return (
-            <div className='App'>
-                <Form schema={schema} />
-            </div>
-        );
-    }
-
+const App = () => {
+    return (
+        <div className='App'>
+            <Form schema={schema} />
+        </div>
+    );
 }
 
 const passportValidator = (extra, message) => {
@@ -41,13 +29,15 @@ const schema = new Schema({
         type: 'string',
         validators: [{ min: 3 }, { max: 8 }],
     },
-    nickRequired: {
+    login: {
         type: 'string',
-        validators: 'required',
+        validators: ['required', { min: 5 }],
+        message: 'The login must not be shorter than {min}'
     },
-    numberField: {
+    age: {
         type: 'numeric',
-        validators: 'required',
+        validators: ['required', { min: 18 }, { max: 99 }],
+        message: 'Age can be over {min} and under {max}'
     },
     email: {
         type: 'string',
@@ -61,12 +51,14 @@ const schema = new Schema({
         type: 'string',
         validators: passportValidator
     },
+    website: {
+        type: 'string',
+        validators: ['url']
+    },
     password: {
         type: 'string',
-        validators: { min: 4 },
+        validators: ['password', 'required']
     },
 })
 
-
 export default App;
-

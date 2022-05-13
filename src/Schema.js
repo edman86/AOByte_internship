@@ -1,3 +1,5 @@
+import { minimum, maximum, checkEmail, checkPhoneNumber, checkUrl, checkPassword } from './helpers/validators';
+import { createInputName } from './helpers/createInputName';
 import { v4 as uuidv4 } from 'uuid';
 
 class Schema {
@@ -9,6 +11,8 @@ class Schema {
             max: maximum,
             email: checkEmail,
             phone: checkPhoneNumber,
+            url: checkUrl,
+            password: checkPassword
         };
         this._createRules();
     }
@@ -56,18 +60,16 @@ class Schema {
                         vals.push(validatorName);
                         extras[validatorName] = validatorExtra;
                     }
-
-                } else if (typeof validator === 'string') {
-                    if (validator.toLowerCase() === 'required') {
+                } else {
+                    if (typeof validator === 'string' && validator.toLowerCase() === 'required') {
                         rules.required = true;
+                    } else if (typeof validator === 'function') {
+                        vals.push(validator);
                     } else {
                         vals.push(validator.toLowerCase());
                     }
-                } else if (typeof validator === 'function') {
-                    vals.push(validator);
-                    // console.log();
                 }
-            })
+            });
 
             // Every validator must be an object with validate function.
             // That's why we invoke standart validators at this.validators property.
@@ -148,15 +150,13 @@ class Schema {
                 updInput = { ...input, isValid: false, errorMessage: 'The input field must not be empty!' }
             } else if (!input.value) {
                 updInput = { ...input, isValid: true, errorMessage: '' };
-            } else if (input.required && input.value) {
-                updInput = { ...input, isValid: true, errorMessage: '' };
             } else if (input.type === 'array' && !input.value.length && !input.required) {
                 updInput = { ...input, isValid: true, errorMessage: '' };
-            } else {
+            } 
+            else {
                 for (let validator of this.rules[input.name].validators) {
                     let isValid;
                     if (Array.isArray(input.value)) {
-                        console.log('validating arr');
                         for (let val of input.value) {
                             isValid = validator.validate(val);
                             if (!isValid) break;
@@ -172,98 +172,11 @@ class Schema {
                         updInput = { ...input, isValid: true, errorMessage: '' };
                     }
                 }
-
-
             }
             return updInput;
         });
-
         return updatedInputs;
     }
-
 }
-
-const minimum = (extra = undefined, message) => {
-    if (!message) {
-        message = 'The field must contain minimum {min} letters';
-    }
-
-    if (extra) {
-        const text = message;
-        const result = text.match(/{([^}]+)}/g)
-            .map(res => res.replace(/{|}/g, ''))
-
-        for (let i = 0; i < result.length; i++) {
-            message = message.replace('{' + result[i] + '}', extra[result[i]]);
-        }
-    }
-
-    return {
-        validate: (el) => {
-            return el.length >= extra.min;
-        },
-        message
-    }
-}
-
-const maximum = (extra = undefined, message) => {
-    if (!message) {
-        message = 'The field must contain maximum {max} letters';
-    }
-
-    if (extra) {
-        const text = message;
-        const result = text.match(/{([^}]+)}/g)
-            .map(res => res.replace(/{|}/g, ''))
-
-        for (let i = 0; i < result.length; i++) {
-            message = message.replace('{' + result[i] + '}', extra[result[i]]);
-        }
-    }
-
-    return {
-        validate: (el) => {
-            return el.length <= extra.max;
-        },
-        message
-    }
-}
-
-
-const checkEmail = (extra = undefined, message) => {
-    if (!message) {
-        message = 'The email must contain @ symbol and domain name';
-    }
-
-    return {
-        validate: (email) => {
-            return email
-                .toLowerCase()
-                .match(
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                );
-        },
-        message
-    }
-}
-
-const checkPhoneNumber = (extra = undefined, message) => {
-    if (!message) {
-        message = 'The phone number must be in the format like: 043123456 or 43123456 or +37443123456';
-    }
-
-    return {
-        validate: (phoneNumber) => {
-            return phoneNumber.match(/^(([+374]{4}|[0]{1}))?([1-9]{2})(\d{6})$/);
-        },
-        message
-    }
-}
-
-
-const createInputName = (name) => {
-    return name.split(/(?=[A-Z])/).join(' ').toLowerCase();
-}
-
 
 export default Schema;

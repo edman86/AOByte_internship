@@ -26,7 +26,7 @@ const Input = (props) => {
                 type={type}
                 name={name}
                 value={value}
-                onChange={(e) => setValue(e.target.value, index)}
+                onChange={(e) => setValue(e.target.value.trim(), index)}
             />
         </>
     );

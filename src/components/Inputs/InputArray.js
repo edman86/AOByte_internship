@@ -46,7 +46,7 @@ class InputArray extends Component {
                         type={type}
                         name={name}
                         value={this.state.inputValue}
-                        onChange={(e) => this.setState({ inputValue: e.target.value })}
+                        onChange={(e) => this.setState({ inputValue: e.target.value.trim() })}
                     />
                     <div>
                         <button

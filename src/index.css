@@ -1,72 +1,86 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 
 input {
-  padding: 0.5em 1em;
-  font-family: inherit;
-  font-size: 1rem;
-  border: none;
+    padding: 0.5em 1em;
+    font-family: inherit;
+    font-size: 1rem;
+    border: none;
 }
 
 ul {
-  padding-left: 2em;
-  margin: 0;
+    padding-left: 2em;
+    margin: 0;
 }
 
 small {
-  max-width: 300px;
+    max-width: 300px;
 }
 
 .form-input {
-  max-width: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 1em;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1em;
 }
 
 .input {
-  border: 1px solid #ccc;
-  border-radius: 0.3em;
+    border: 1px solid #ccc;
+    border-radius: 0.3em;
 }
 
 .label {
-  text-transform: capitalize;
+    text-transform: capitalize;
 }
 
 .required::after {
-  content: '*';
-  color: red;
-  margin-left: 10px;
+    content: '*';
+    color: red;
+    margin-left: 10px;
 }
 
 .input-error {
-  border: 1px solid red;
+    border: 1px solid red;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }
 
 .error {
-  color: red;
-  display: block;
-  margin-top: 0;
+    color: red;
+    display: block;
+    margin-top: 0;
 }
 
+.submit-btn {
+    padding: 0.5em 1em;
+    font-size: 1.2rem;
+    font-family: inherit;
+    cursor: pointer;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.4em;
+    color: #fff;
+}
+
+.submit-btn:hover {
+    background-color: #0969cf;
+}

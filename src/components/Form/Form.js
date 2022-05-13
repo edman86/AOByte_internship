@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import Input from '../Input';
-import InputArray from '../InputArray';
+import Input from '../Inputs/Input';
+import InputArray from '../Inputs/InputArray';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            inputs: this.props.schema.createInputsArray(),
-            values: {},
-            errors: {},
-            isValid: true
+            inputs: this.props.schema.createInputsArray()
         };
+        
         this.handleSubmit = this.handleSubmit.bind(this);
         this.setValue = this.setValue.bind(this);
     }
@@ -24,6 +23,7 @@ class Form extends Component {
                 return item;
             }
         })
+
         this.setState({ inputs: updatedInputs });
     }
 
@@ -53,11 +53,7 @@ class Form extends Component {
                                     required={input.required}
                                     isValid={input.isValid}
                                 />
-                                <small
-                                    className={this.state.inputs[index].isValid ? 'hidden' : 'error'}
-                                >
-                                    {this.state.inputs[index].errorMessage}
-                                </small>
+                                <ErrorMessage index={index} inputs={this.state.inputs} />
                             </div>
                         );
                     } else {
@@ -74,20 +70,18 @@ class Form extends Component {
                                     required={input.required}
                                     isValid={input.isValid}
                                 />
-                                <small
-                                    className={this.state.inputs[index].isValid ? 'hidden' : 'error'}
-                                >
-                                    {this.state.inputs[index].errorMessage}
-                                </small>
+                                <ErrorMessage index={index} inputs={this.state.inputs} />
                             </div>
                         );
                     }
-
                 })}
 
-                <br />
-
-                <button type="submit">Sign up</button>
+                <button 
+                    type="submit" 
+                    className="submit-btn"
+                >
+                    Sign up
+                </button>
             </form>
         );
     }
