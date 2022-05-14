@@ -2,7 +2,17 @@ import { minimum, maximum, checkEmail, checkPhoneNumber, checkUrl, checkPassword
 import { createInputName } from './helpers/createInputName';
 import { v4 as uuidv4 } from 'uuid';
 
+
 class Schema {
+    /**
+    * A class representing a form schema
+    * 
+    * @param  {Object} schema - The javascript object representing form schema
+    * @property {Object} schema - The javascript object representing form schema
+    * @property {Object} rules - An object that describes the rules for creating 
+    * and validating a form. Created by a class based on a schema
+    * @property {Object} validators - Object with preset validation methods
+    */
     constructor(schema) {
         this.schema = schema || {};
         this.rules = {};
@@ -17,8 +27,12 @@ class Schema {
         this._createRules();
     }
 
+    /**
+    * Creates an object based on a schema that contains a description of 
+    * the form - the number of inputs, their type, validation types, etc.
+    * @private
+    */
     _createRules = () => {
-        // сreates validation rules object from schema
         for (let rule of Object.keys(this.schema)) {
 
             let message;
@@ -95,6 +109,10 @@ class Schema {
         }
     }
 
+    /**
+    * Creates an array with inputs to be passed to the form component for rendering
+    * @return {Array<Object>} An array of objects describing form elements
+    */
     createInputsArray = () => {
         let inputs = [];
 
@@ -141,6 +159,11 @@ class Schema {
         return inputs;
     }
 
+    /**
+    * Validates form elements
+    * @param  {Array<Object>} payload - An array of objects describing form elements
+    * @return {Array<Object>} An array with validated form elements
+    */
     validate = (payload) => {
         const inputs = [...payload];
 
@@ -152,8 +175,7 @@ class Schema {
                 updInput = { ...input, isValid: true, errorMessage: '' };
             } else if (input.type === 'array' && !input.value.length && !input.required) {
                 updInput = { ...input, isValid: true, errorMessage: '' };
-            } 
-            else {
+            } else {
                 for (let validator of this.rules[input.name].validators) {
                     let isValid;
                     if (Array.isArray(input.value)) {
