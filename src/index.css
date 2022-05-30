@@ -1,57 +1,96 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 
 :root {
-  font-size: 1.125rem;
+    font-size: 1.125rem;
 }
 
-*, *::before, *::after {
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .sidebar {
-  margin-left: 2em;
-  border: 1px solid #fff;
-  height: 100vh;
+    border-right: 1px solid #ddd;
+    margin-right: 1em;
+    height: 100vh;
 }
 
 .sidebar-item {
-  margin: 1em;
-  border: 1px solid white;
-  padding: 0.5em 1em;
-  color: #fff;
-  border-radius: 0.2em;
+    margin: 1em;
+    border: 1px solid #777;
+    padding: 0.5em 1em;
+    color: #777;
+    border-radius: 0.2em;
 }
 
 .dashboard {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .row {
-  display: flex;
+    display: flex;
 }
 
 .grid-item {
-  width: 200px;
-  height: 100px;
-  border: 1px solid #fff;
-  color: #fff;
+    width: 200px;
+    height: 100px;
+    border: 1px solid #fff;
+    color: #000;
+    margin: 0.2em;
 }
 
-.el {
-  background-color: blueviolet;
+.form-element {
+    position: relative;
+}
+
+.form-element:hover .change-btn {
+    display: block;
+}
+
+.change-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: none;
+    cursor: pointer;
+}
+
+.available {
+    background-color: rgb(243, 240, 247);
+    border: 4px dashed rgb(214, 214, 214);
+}
+
+.btn {
+    font-size: 1rem;
+    padding: 0.5em;
+    background-color: coral;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.4em;
 }
