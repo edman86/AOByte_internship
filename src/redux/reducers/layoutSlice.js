@@ -36,7 +36,6 @@ export const layoutSlice = createSlice({
         },
 
         changeElement: (state, action) => {
-            console.log(action.payload);
             state.elements = state.elements.map(el => {
                 if (el.id === action.payload.id) {
                     el.type = action.payload.type;
