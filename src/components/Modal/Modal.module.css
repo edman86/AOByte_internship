@@ -1,16 +1,42 @@
 .modal {
     display: none;
-    width: 800px;
-    height: 400px;
+}
+
+.backdrop {
     position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.content {
+    width: 800px;
+    min-height: 400px;
+    position: absolute;
     margin: auto;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: #fff;
-    border: 1px solid black;
-    z-index: 10;
+    border-radius: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2em;
+    z-index: 2;
+}
+
+.property {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0.5em;
 }
 
 .closeBtn {
@@ -20,19 +46,17 @@
 }
 
 .changeBtn {
-    background-color: cornflowerblue;
-    padding: 1em;
+    background-color: #6495ed;
+    padding: 0.5em 1em;
     font-size: 1rem;
     margin-top: 2em;
+    border: none;
+    border-radius: 0.4em;
     cursor: pointer;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 2em;
+.changeBtn:hover {
+    background-color: #5c88da;
 }
 
 .hidden {
@@ -41,4 +65,8 @@
 
 .isOpen {
     display: block;
+}
+
+.show {
+    display: flex;
 }

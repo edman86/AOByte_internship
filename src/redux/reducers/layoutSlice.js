@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const initialState = {
     elements: [],
     rows: 5,
-    columns: 3
+    columns: 3,
 };
 
 export const layoutSlice = createSlice({
@@ -20,6 +20,7 @@ export const layoutSlice = createSlice({
                 label: 'default label',
                 content: 'default content',
                 placeholder: 'default placeholder',
+                width: '',
                 options: ['default option']
             }
 
@@ -35,6 +36,7 @@ export const layoutSlice = createSlice({
         },
 
         changeElement: (state, action) => {
+            console.log(action.payload);
             state.elements = state.elements.map(el => {
                 if (el.id === action.payload.id) {
                     el.type = action.payload.type;
@@ -42,10 +44,10 @@ export const layoutSlice = createSlice({
                     el.content = action.payload.content;
                     el.placeholder = action.payload.placeholder;
                     el.options = action.payload.options;
+                    el.width = action.payload.width;
 
                     return el;
                 }
-                console.log('changet');
                 return el;
             })
         },
@@ -88,7 +90,7 @@ export const layoutSlice = createSlice({
     }
 });
 
-export const { addElement, removeElement, clear, increase, decrease, changeElement } = layoutSlice.actions;
+export const { addElement, removeElement, clear, increase, decrease, changeElement, setCurrentElement } = layoutSlice.actions;
 export const selectElements = (state) => state.layout.elements;
 export const selectRowsCount = (state) => state.layout.rows;
 export const selectColumnsCount = (state) => state.layout.columns;

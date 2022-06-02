@@ -22,6 +22,36 @@ code {
     box-sizing: border-box;
 }
 
+input {
+    color: inherit;
+    font-size: 1rem;
+    padding: 0.3em 0.5em;
+    border: 1px solid #999;
+    border-radius: 0.3em;
+}
+
+select {
+    font-size: 1rem;
+    padding: 0.3em 0.5em;
+    border: 1px solid #999;
+    border-radius: 0.3em;
+}
+
+button {
+    border: none;
+    font-size: 1rem;
+    background-color: #cceaee;
+    padding: 0.2em 0.4em;
+    border-radius: 0.3em;
+    margin: 0 0.2em;
+    min-width: 40px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #bedbdf;
+}
+
 .container {
     max-width: 1200px;
     width: 100%;
@@ -58,7 +88,7 @@ code {
 }
 
 .grid-item {
-    width: 200px;
+    min-width: 200px;
     height: 100px;
     border: 1px solid #fff;
     color: #000;
@@ -67,6 +97,8 @@ code {
 
 .form-element {
     position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-element:hover .change-btn {
@@ -93,4 +125,8 @@ code {
     border: none;
     cursor: pointer;
     border-radius: 0.4em;
+}
+
+.btn:hover {
+    background-color: rgb(223, 111, 70);
 }

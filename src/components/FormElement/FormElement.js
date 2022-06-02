@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-
 import { toggleModal, setCurrentId } from "../../redux/reducers/modalSlice";
 
 const FormElement = ({
@@ -8,6 +7,7 @@ const FormElement = ({
     label,
     content,
     placeholder,
+    width,
     options
 }) => {
     const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const FormElement = ({
                 <label>{label}</label>
                 <textarea
                     placeholder={placeholder}
+                    style={{width: `${width}px`}}
                 />
                 <button className="change-btn" onClick={handleClick}>&#8634;</button>
             </div>
@@ -49,9 +50,10 @@ const FormElement = ({
             <div className="form-element">
                 <label>{label}</label>
                 <button
+                    className="btn"
                     type={type}
                     placeholder={placeholder}
-                    className="btn"
+                    style={{width: `${width}px`}}
                 >
                     {content}
                 </button>
@@ -85,6 +87,7 @@ const FormElement = ({
                 <input
                     type={type}
                     placeholder={placeholder}
+                    style={{width: `${width}px`}}
                 />
                 <button className="change-btn" onClick={handleClick}>&#8634;</button>
             </div>
